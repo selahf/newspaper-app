@@ -2,6 +2,8 @@
 
 This is an application created by working through Chapters 9-15 of the Django for Beginners textbook.
 
+There are articles that users can read.
+
 ## Superuser Credentials
 
 During development, you may need to create a new superuser locally to be able to
