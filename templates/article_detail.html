@@ -20,6 +20,65 @@
     <p>{{ object.body }}</p>
 </div>
 
+{% if featured_books %}
+<section class="featured-books">
+    <div class="featured-books-heading">
+        <h2>Further Reading</h2>
+        <p>Books related to this article</p>
+    </div>
+
+    <div class="featured-books-grid">
+        {% for book in featured_books %}
+        <article class="featured-book">
+            {% if book.cover_i %}
+            <img
+                src="https://covers.openlibrary.org/b/id/{{ book.cover_i }}-M.jpg?default=false"
+                alt="Cover of {{ book.title }}"
+                loading="lazy"
+            >
+            {% endif %}
+
+            <div class="featured-book-info">
+                <h3>
+                    <a
+                        href="https://openlibrary.org{{ book.key }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {{ book.title }}
+                    </a>
+                </h3>
+
+                {% if book.author_name %}
+                    <p class="featured-book-author">
+                    By
+                    {% for author in book.author_name %}
+                        {{ author }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% endif %}
+
+                {% if book.first_publish_year %}
+                <p class="featured-book-year">
+                    First published {{ book.first_publish_year }}
+                </p>
+                {% endif %}
+
+                <a
+                    class="featured-book-link"
+                    href="https://openlibrary.org{{ book.key }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    View on Open Library ›
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %} 
+
 <hr>
 <h4>Comments</h4>
 {% for comment in article.comment_set.all %}

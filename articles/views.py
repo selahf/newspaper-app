@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from taggit.models import Tag
 from .models import Article
 from .forms import CommentForm
+from .services.open_library import search_books
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
@@ -18,7 +19,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     fields = (
         "title",
         "body",
-        "tags"
+        "tags",
+        "featured_book_query"
     )
     
     def form_valid(self, form):
@@ -35,6 +37,17 @@ class CommentGet(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
+        
+        article = self.object
+        
+        # only search open library if featured book query provided
+        if article.featured_book_query:
+            context["featured_books"] = search_books(
+                article.featured_book_query
+            )
+        else:
+            context["featured_books"] = []
+        
         return context
     
 class CommentPost(SingleObjectMixin, FormView):
@@ -61,7 +74,7 @@ class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "article_list.html"
     
-class TaggedArticleListView(ListView):
+class TaggedArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "tagged_articles.html"
     context_object_name = "articles"
@@ -94,7 +107,8 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = (
         "title",
         "body",
-        "tags"
+        "tags",
+        "featured_book_query"
     )
     template_name = "article_edit.html"
     

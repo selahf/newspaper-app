@@ -13,6 +13,10 @@ class Article(models.Model):
     )
     
     tags = TaggableManager(blank = True) # tags are optional
+    featured_book_query = models.CharField(
+        max_length = 255,
+        blank = True
+    )
     
     def __str__(self):
         return self.title
