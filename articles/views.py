@@ -7,6 +7,8 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
 from .models import Article
 from .forms import CommentForm
 
@@ -15,7 +17,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "article_new.html"
     fields = (
         "title",
-        "body"
+        "body",
+        "tags"
     )
     
     def form_valid(self, form):
@@ -57,6 +60,25 @@ class CommentPost(SingleObjectMixin, FormView):
 class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "article_list.html"
+    
+class TaggedArticleListView(ListView):
+    model = Article
+    template_name = "tagged_articles.html"
+    context_object_name = "articles"
+    
+    def get_queryset(self):
+        self.tag = get_object_or_404(
+            Tag,
+            slug = self.kwargs["tag_slug"]
+        )
+        return Article.objects.filter(
+            tags__in = [self.tag]
+        )
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag"] = self.tag
+        return context
 
 class ArticleDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
@@ -72,6 +94,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = (
         "title",
         "body",
+        "tags"
     )
     template_name = "article_edit.html"
     

@@ -1,0 +1,128 @@
+
+/* ========================================
+   NEWSPAPER DESIGN TOKENS
+   Inspired by the portfolio design system
+   ======================================== */
+
+   :root {
+    --color-primary: #E8BEB7;
+    --color-secondary: #AFC5B4;
+    --color-secondary-dark: #738A78;
+
+    --color-background: #FAF9F6;
+    --color-text: #26332C;
+
+    --color-sage-light: #E8EFE8;
+    --color-rose-light: #F7EAE7;
+
+    --radius-small: 8px;
+    --radius-pill: 50px;
+
+    --shadow-soft: 0 4px 14px rgba(38, 51, 44, 0.07);
+
+    --transition-fast: 150ms ease;
+}
+
+/* ========================================
+   ARTICLE TAGS
+   ======================================== */
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 18px;
+    margin-bottom: 16px;
+}
+
+.article-tag {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 13px;
+
+    background-color: var(--color-sage-light);
+    color: var(--color-text);
+
+    border: 1px solid rgba(115, 138, 120, 0.25);
+    border-radius: var(--radius-pill);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    text-decoration: none;
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.article-tag:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+    text-decoration: none;
+}
+
+.article-tag:focus-visible {
+    outline: 3px solid var(--color-secondary-dark);
+    outline-offset: 3px;
+}
+
+/* ========================================
+   ARTICLE CARDS
+   ======================================== */
+
+.article-card {
+    border: 1px solid rgba(115, 138, 120, 0.18);
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: var(--shadow-soft);
+}
+
+.article-card .card-header {
+    background-color: var(--color-sage-light);
+    color: var(--color-text);
+}
+
+.article-card .card-body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+/* ========================================
+   ARTICLE ACTION LINKS
+   ======================================== */
+
+.article-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    margin-top: 12px;
+}
+
+.article-actions a {
+    color: var(--color-secondary-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.article-actions a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+}

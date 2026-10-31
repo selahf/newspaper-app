@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="tag-page">
+    <h2>Articles tagged "{{ tag.name }}"</h2>
+
+    <p>Discover more stories and reporting on this topic.</p>
+
+    <div class="tagged-articles">
+        {% for article in articles %}
+            <div class="article-entry">
+                <h3>
+                    <a href="{{ article.get_absolute_url }}">
+                        {{ article.title }}
+                    </a>
+                </h3>
+
+                <p>
+                    By {{ article.author }} · {{ article.date }}
+                </p>
+
+                <p>{{ article.body|truncatewords:35 }}</p>
+            </div>
+        {% empty %}
+            <p>There are no articles with this topic yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'article_list' %}">
+        Back to all articles
+    </a>
+</div>
+
+{% endblock content %}

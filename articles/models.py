@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
@@ -10,6 +11,8 @@ class Article(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    
+    tags = TaggableManager(blank = True) # tags are optional
     
     def __str__(self):
         return self.title

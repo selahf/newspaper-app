@@ -4,6 +4,7 @@ click==8.5.0
 crispy-bootstrap5==2024.2
 Django==5.0.14
 django-crispy-forms==2.2
+django-taggit==6.1.0
 mypy_extensions==1.1.0
 packaging==26.3
 pathspec==1.1.1

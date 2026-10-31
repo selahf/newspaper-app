@@ -5,6 +5,18 @@
 <div class="article-entry">
     <h2>{{ object.title }}</h2>
     <p>by {{ object.author }} | {{ object.date }}</p>
+
+    {% if object.tags.all %}
+    <div class="article-tags">
+        {% for tag in object.tags.all %}
+        <a href="{% url 'tagged_articles' tag.slug %}"
+            class="article-tag">
+            {{ tag.name }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <p>{{ object.body }}</p>
 </div>
 
